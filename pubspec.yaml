@@ -17,7 +17,7 @@ dependencies:
   source_gen: ^1.5.0
   build: ^2.4.1
   dart_orm_annotation:
-    path: ../dart_orm_annotation
+    git: https://github.com/andyhorn/dart_orm_annotation.git
 
 dev_dependencies:
   lints: ^2.1.0
