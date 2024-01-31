@@ -2,7 +2,7 @@ name: dart_orm_generator
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 publish_to: none
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/andyhorn/dart_orm_generator
 
 environment:
   sdk: ^3.2.2
