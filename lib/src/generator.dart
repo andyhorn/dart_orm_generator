@@ -22,8 +22,9 @@ class DartOrmGenerator extends GeneratorForAnnotation<orm.Entity> {
     _validatePrimaryKey(element);
 
     final className = element.name!;
-    final classAnnotation = annotation.peek('name')?.stringValue;
-    final tableName = _getTableName(className, classAnnotation);
+    final preferredName = annotation.peek('name')?.stringValue;
+    final tableName =
+        preferredName ?? StringUtils.camelCaseToLowerUnderscore(className);
 
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
@@ -70,21 +71,6 @@ ${_buildWhenFieldsExist(visitor, WhereExpressionDataBuilder(
 
 ${repository.build()}
 ''';
-  }
-
-  String _getTableName(String className, String? classAnnotation) {
-    late String tableName;
-    if (classAnnotation == null) {
-      tableName = StringUtils.camelCaseToLowerUnderscore(className);
-    } else {
-      tableName = classAnnotation;
-    }
-
-    if (!tableName.endsWith('s')) {
-      tableName += 's';
-    }
-
-    return tableName;
   }
 
   void _validatePrimaryKey(Element element) {
