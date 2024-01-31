@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      dart_orm_generator:
+        enabled: true
+
+builders:
+  dart_orm_generator:
+    target: ":generator"
+    import: "package:dart_orm_generator/dart_orm_generator.dart"
+    builder_factories: ["dartOrmBuilder"]
+    build_extensions: { ".dart": [".repository.dart"] }
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen:combining_builder"]
