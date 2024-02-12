@@ -1,6 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_orm_generator/src/builders/code_builder.dart';
 import 'package:dart_orm_generator/src/builders/insert_model_builder.dart';
+import 'package:dart_orm_generator/src/builders/order_by_builder.dart';
 import 'package:dart_orm_generator/src/builders/update_model_builder.dart';
 import 'package:dart_orm_generator/src/builders/where/where.dart';
 import 'package:dart_orm_generator/src/model_visitor.dart';
@@ -168,7 +169,9 @@ class RepositoryBuilder extends CodeBuilder {
               b.optionalParameters.add(Parameter((b) {
                 b.name = 'orderBy';
                 b.named = true;
-                b.type = Reference('String?');
+                b.type = Reference(
+                  '${OrderByBuilder.generateClassName(className)}?',
+                );
               }));
               b.modifier = MethodModifier.async;
               b.returns = Reference('Future<List<$className>>');
@@ -329,7 +332,7 @@ return $className(
 final buffer = StringBuffer('SELECT * FROM $tableName WHERE \${find.toQuery()}',);
 
 if (orderBy != null) {
-  buffer.write(' ORDER BY \$orderBy');
+  buffer.write(' ORDER BY \${orderBy.toQuery()}');
 }
 
 if (limit != null) {

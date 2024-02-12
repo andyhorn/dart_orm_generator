@@ -12,6 +12,8 @@ class OrderByBuilder extends CodeBuilder {
   final ModelVisitor visitor;
 
   static String generateClassName(String className) => '${className}OrderBy';
+  static String generateEnumName(String className) =>
+      '${className}OrderByDirection';
 
   @override
   String build() {
@@ -23,7 +25,7 @@ class OrderByBuilder extends CodeBuilder {
             Field(
               (b) => b
                 ..name = field.propertyName
-                ..type = Reference('Optional<${className}OrderByDirection>')
+                ..type = Reference('Optional<${generateEnumName(className)}>')
                 ..modifier = FieldModifier.final$,
             ),
           ],
@@ -66,7 +68,7 @@ return fields.join(', ');
     );
 
     return '''
-enum ${className}OrderByDirection {
+enum ${generateEnumName(className)} {
   asc,
   desc;
 
