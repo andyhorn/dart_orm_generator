@@ -29,7 +29,7 @@ class UserUpdateData {
     this.lastName = const Optional.nil(),
   });
 
-  final Optional<String> id;
+  final String id;
 
   final Optional<String> firstName;
 
@@ -231,9 +231,7 @@ class UserRepository {
 
   Future<User?> update(UserUpdateData update) async {
     final updates = [
-      if (update.id.isNotNil) ...[
-        'id',
-      ],
+      update.id,
       if (update.firstName.isNotNil) ...[
         'firstName',
       ],
@@ -243,9 +241,7 @@ class UserRepository {
     ];
 
     final params = {
-      if (update.id.isNotNil) ...{
-        '@id': update.id.value,
-      },
+      '@id': update.id,
       if (update.firstName.isNotNil) ...{
         '@firstName': update.firstName.value,
       },

@@ -217,7 +217,15 @@ class RepositoryBuilder extends CodeBuilder {
     final updateBuffer = StringBuffer();
     final paramBuffer = StringBuffer();
 
-    for (final field in visitor.fields) {
+    updateBuffer.writeln('''
+update.$primaryKey,
+''');
+
+    paramBuffer.writeln('''
+'@$primaryKey': update.$primaryKey,
+''');
+
+    for (final field in visitor.fields.where((f) => !f.isPrimaryKey)) {
       updateBuffer.writeln('''
 if (update.${field.propertyName}.isNotNil) ...[
   '${field.name}',

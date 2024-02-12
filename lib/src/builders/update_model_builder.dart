@@ -19,8 +19,21 @@ class UpdateModelBuilder extends CodeBuilder {
       Class((builder) {
         builder.name = '${className}UpdateData';
 
+        if (visitor.fields.any((f) => f.isPrimaryKey)) {
+          final primaryKey = visitor.fields.firstWhere((f) => f.isPrimaryKey);
+
+          builder.fields.add(
+            Field((b) {
+              b
+                ..name = primaryKey.propertyName
+                ..type = Reference(primaryKey.propertyType)
+                ..modifier = FieldModifier.final$;
+            }),
+          );
+        }
+
         builder.fields.addAll([
-          for (final field in visitor.fields) ...[
+          for (final field in visitor.fields.where((f) => !f.isPrimaryKey)) ...[
             Field((b) {
               b
                 ..name = field.propertyName
