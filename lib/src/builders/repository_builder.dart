@@ -223,10 +223,6 @@ class RepositoryBuilder extends CodeBuilder {
     final updateBuffer = StringBuffer();
     final paramBuffer = StringBuffer();
 
-    updateBuffer.writeln('''
-update.$primaryKey,
-''');
-
     paramBuffer.writeln('''
 '@$primaryKey': update.$primaryKey,
 ''');
