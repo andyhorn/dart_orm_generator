@@ -167,8 +167,8 @@ class UserRepository {
   Future<User> insert(UserInsertData insert) async {
     final result = await _connection.execute(
       Sql.named(
-        'INSERT INTO user (id, firstName, lastName) '
-        'VALUES (@id, @firstName, @lastName) '
+        'INSERT INTO user (firstName, lastName) '
+        'VALUES (@firstName, @lastName) '
         'RETURNING *;',
       ),
       parameters: {
@@ -231,7 +231,6 @@ class UserRepository {
 
   Future<User?> update(UserUpdateData update) async {
     final updates = [
-      update.id,
       if (update.firstName.isNotNil) ...[
         'firstName',
       ],
